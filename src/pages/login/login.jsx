@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import {Form,Icon,Input,Button} from 'antd';
-import myAxios from '../../api/myAxios'
 import logo from './img/logo.png'
 import './css/login.less'
+import {reqLogin} from '../../api'
 const {Item} = Form
 
 class Login extends Component {
@@ -36,15 +36,12 @@ class Login extends Component {
 	handleSubmit = (event)=>{
 		event.preventDefault() //阻止表单提交这个默认行为
 		//获取所有表单中用户的输入
-		this.props.form.validateFields((err, values) => {
+		this.props.form.validateFields(async(err, values) => {
+			//如果输入的用户名和密码均没问题，就发送请求
       if (!err) {
 				const {username,password} = values
-				//如果输入的用户名和密码均没问题，就发送请求
-				//console.log('发送了网络请求', values);
-				myAxios.post('http://localhost:3000/login',values).then(
-					(response)=>{console.log(response.data);},
-					(error)=>{console.log(error);}
-				)
+				let result = await reqLogin(username,password)
+				console.log(result);
       }
     });
 
