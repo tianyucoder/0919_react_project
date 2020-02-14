@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Form,Icon,Input,Button} from 'antd';
-import axios from 'axios'
+import myAxios from '../../api/myAxios'
 import logo from './img/logo.png'
 import './css/login.less'
 const {Item} = Form
@@ -41,7 +41,7 @@ class Login extends Component {
 				const {username,password} = values
 				//如果输入的用户名和密码均没问题，就发送请求
 				//console.log('发送了网络请求', values);
-				axios.post('http://localhost:3000/login',`username=${username}&password=${password}`).then(
+				myAxios.post('http://localhost:3000/login',values).then(
 					(response)=>{console.log(response.data);},
 					(error)=>{console.log(error);}
 				)
