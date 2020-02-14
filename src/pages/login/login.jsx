@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Form,Icon,Input,Button} from 'antd';
+import {Form,Icon,Input,Button,message} from 'antd';
 import logo from './img/logo.png'
 import './css/login.less'
 import {reqLogin} from '../../api'
@@ -41,7 +41,14 @@ class Login extends Component {
       if (!err) {
 				const {username,password} = values
 				let result = await reqLogin(username,password)
-				console.log(result);
+				const {status,data,msg} = result
+				if(status === 0){
+					message.success('登录成功！')
+					console.log(data);
+					this.props.history.replace('/admin')
+				}else{
+					message.warning(msg)
+				}
       }
     });
 
