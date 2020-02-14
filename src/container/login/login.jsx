@@ -3,6 +3,8 @@ import {Form,Icon,Input,Button,message} from 'antd';
 import logo from './img/logo.png'
 import './css/login.less'
 import {reqLogin} from '../../api'
+import {connect} from 'react-redux'
+import {createSaveUserInfoAction} from '../../redux/actions/login'
 const {Item} = Form
 
 class Login extends Component {
@@ -44,7 +46,10 @@ class Login extends Component {
 				const {status,data,msg} = result
 				if(status === 0){
 					message.success('登录成功！')
-					console.log(data);
+					//向redux中保存用户信息
+					//console.log(data);
+					this.props.saveUserInfo(data)
+					//跳转到admin页面
 					this.props.history.replace('/admin')
 				}else{
 					message.warning(msg)
@@ -118,26 +123,10 @@ class Login extends Component {
 	}
 }
 
-//Form.create()返回值依是一个函数，该函数接收一个组件，随后生成一个新组件，我们渲染那个新组件
-//Form.create()返回的方法能够加工组件，生成的新组件多了一个特别重要的属性：form
-export default Form.create()(Login);
-
-/*
-  总结：
-    1. 高阶函数
-      定义: 如果函数接收的参数是函数或者返回值是函数
-      例子: Promise() / then() / 定时器 / 数组遍历相关方法 / bind() / $() / $.get() / Form.create()
-			好处: 更加动态, 更加具有扩展性
-
-		2. 高阶组件 备注：组件的本质是函数！！！
-			定义: 接收一个组件且返回一个新组件
-			例子: Form.create()(组件) / withRouter(组件) / connect()(组件)
-			高阶组件与高阶函数的关系?
-					高阶组件是一个特别的高阶函数
-					接收的是组件, 同时返回新的组件
-			作用:
-					React 中用于复用组件逻辑的一种高级技巧
-*/
+ export default connect(
+	 ()=>({}),//用于映射状态
+	 {saveUserInfo:createSaveUserInfoAction} //用于映射操作状态的方法
+ )(Form.create()(Login))
 
 
 
