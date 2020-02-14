@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
 class Admin extends Component {
 	render() {
+		const {isLogin} = this.props.userInfo
+		if(!isLogin) return <Redirect to="/login"/>
 		return (
 			<h1>
 				欢迎登录，{this.props.userInfo.user.username}

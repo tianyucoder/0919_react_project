@@ -5,6 +5,7 @@ import './css/login.less'
 import {reqLogin} from '../../api'
 import {connect} from 'react-redux'
 import {createSaveUserInfoAction} from '../../redux/actions/login'
+import {Redirect} from 'react-router-dom'
 const {Item} = Form
 
 class Login extends Component {
@@ -47,7 +48,6 @@ class Login extends Component {
 				if(status === 0){
 					message.success('登录成功！')
 					//向redux中保存用户信息
-					//console.log(data);
 					this.props.saveUserInfo(data)
 					//跳转到admin页面
 					this.props.history.replace('/admin')
@@ -61,7 +61,8 @@ class Login extends Component {
 
 	render() {
 		const { getFieldDecorator } = this.props.form;
-		//console.log(this.props);
+		const {isLogin} = this.props.userInfo
+		if(isLogin) return <Redirect to="/admin"/>
 		return (
 			<div id="login">
 				<div className="header">
@@ -124,7 +125,7 @@ class Login extends Component {
 }
 
  export default connect(
-	 ()=>({}),//用于映射状态
+	 (state)=>({userInfo:state.userInfo}),//用于映射状态
 	 {saveUserInfo:createSaveUserInfoAction} //用于映射操作状态的方法
  )(Form.create()(Login))
 
