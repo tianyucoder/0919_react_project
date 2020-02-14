@@ -1,4 +1,4 @@
-import {SAVE_USERINFO} from '../action_types'
+import {SAVE_USERINFO,DELETE_USERINFO} from '../action_types'
 
 /* 
 	尝试从localStorage中读取用户信息：
@@ -21,6 +21,9 @@ export default function (preState=initState,action){
 		case SAVE_USERINFO:
 			const {user,token} = data
 			newState = {user,token,isLogin:true}
+			return newState
+		case DELETE_USERINFO:
+			newState = {user:{},token:'',isLogin:false}
 			return newState
 		default:
 			return preState
