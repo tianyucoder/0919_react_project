@@ -14,6 +14,10 @@
 		4.使用redux保存已经登录的用户信息
 		5.Login组件、Admin组件与redux交互
 		6.完成登录功能，加Login与Admin的权限控制	
+### day04任务
+		1.装饰器语法：
+				第一步：安装：@babel/plugin-proposal-decorators
+				第二步：更改：config-overrides.js文件，添加一个addDecoratorsLegacy
 
 		
 		
