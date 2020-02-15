@@ -19,12 +19,8 @@ export default function (ReceiveComponent){
 		render(){
 			const {isLogin} = this.props
 			const {pathname} = this.props.location
-			if(!isLogin && pathname === '/admin'){
-				return <Redirect to="/login"/>
-			}
-			if(isLogin && pathname === '/login'){
-				return <Redirect to="/admin"/>
-			}
+			if(!isLogin && pathname === '/admin') return <Redirect to="/login"/>
+			if(isLogin && pathname === '/login') return <Redirect to="/admin"/>
 			return <ReceiveComponent {...this.props}/>
 		}
 	}

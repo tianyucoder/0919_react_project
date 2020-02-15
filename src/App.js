@@ -51,12 +51,12 @@ MyClass = demo(MyClass) */
 
 //情况三：装饰器函数是另外一个函数的返回值
 /* function test(){
-	function demo(target) {
-		target.a = 1
-		target.b = 2
-		return target
-	}
-	return demo
+		function demo(target) {
+			target.a = 1
+			target.b = 2
+			return target
+		}
+		return demo
 }
 
 //使用装饰器语法，代码如下
@@ -66,15 +66,4 @@ class MyClass {}
 //上方的装饰器语法，会被翻译为如下代码:
 class MyClass {}
 MyClass = test()(MyClass) */
-
-/* 
-
-<Switch>
-	<Route path="/login" component={Login}/>
-	<Route path="/admin" component={Admin}/>
-	<Redirect to="/login"/>
-</Switch>
-
-*/
-
 
