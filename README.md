@@ -20,6 +20,11 @@
 				第二步：更改：config-overrides.js文件，添加一个addDecoratorsLegacy
 				第三步：更改编译器设置，首选项-->设置---->搜索“decorators”,将中间选项的钩，勾选。
 		2.自定义一个高阶组件：check组件，用于检查组件的权限（登录与非登录）
+		3.admin页面整体布局，使用antd的Layout组件
+		4.头部header组件静态
+		5.使用screenfull库全屏切换
+		6.使用dayjs处理时间
+		7.使用jsonp库请求百度天气数据
 		
 		
 
