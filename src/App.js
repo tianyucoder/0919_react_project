@@ -67,4 +67,14 @@ class MyClass {}
 class MyClass {}
 MyClass = test()(MyClass) */
 
+/* 
+
+<Switch>
+	<Route path="/login" component={Login}/>
+	<Route path="/admin" component={Admin}/>
+	<Redirect to="/login"/>
+</Switch>
+
+*/
+
 

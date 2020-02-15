@@ -5,7 +5,7 @@ import './css/login.less'
 import {reqLogin} from '../../api'
 import {connect} from 'react-redux'
 import {createSaveUserInfoAction} from '../../redux/actions/login'
-import {Redirect} from 'react-router-dom'
+import check from '../check/check'
 const {Item} = Form
 
 @connect(
@@ -13,6 +13,7 @@ const {Item} = Form
 	{saveUserInfo:createSaveUserInfoAction} //用于映射操作状态的方法
 )
 @Form.create()
+@check
 class Login extends Component {
 
 	//自定义密码校验器
@@ -66,8 +67,8 @@ class Login extends Component {
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
-		const {isLogin} = this.props.userInfo
-		if(isLogin) return <Redirect to="/admin"/>
+		//const {isLogin} = this.props.userInfo
+		//if(isLogin) return <Redirect to="/admin"/>
 		return (
 			<div id="login">
 				<div className="header">
