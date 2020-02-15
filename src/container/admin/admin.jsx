@@ -13,7 +13,7 @@ class Admin extends Component {
 				<Sider>Sider</Sider>
 				<Layout>
 					<Header/>
-					<Content>Content</Content>
+					<Content style={{backgroundColor:'skyblue'}}>Content</Content>
 					<Footer>Footer</Footer>
 				</Layout>
 			</Layout>
