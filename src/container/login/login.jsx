@@ -8,6 +8,11 @@ import {createSaveUserInfoAction} from '../../redux/actions/login'
 import {Redirect} from 'react-router-dom'
 const {Item} = Form
 
+@connect(
+	(state)=>({userInfo:state.userInfo}),//用于映射状态
+	{saveUserInfo:createSaveUserInfoAction} //用于映射操作状态的方法
+)
+@Form.create()
 class Login extends Component {
 
 	//自定义密码校验器
@@ -124,10 +129,5 @@ class Login extends Component {
 	}
 }
 
- export default connect(
-	 (state)=>({userInfo:state.userInfo}),//用于映射状态
-	 {saveUserInfo:createSaveUserInfoAction} //用于映射操作状态的方法
- )(Form.create()(Login))
-
-
+export default Login
 

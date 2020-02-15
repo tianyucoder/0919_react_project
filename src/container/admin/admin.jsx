@@ -3,6 +3,10 @@ import {connect} from 'react-redux'
 import {Redirect} from 'react-router-dom'
 import {createDeleteUserInfoAction} from '../../redux/actions/login'
 
+@connect(
+	(state)=>({userInfo:state.userInfo}), //映射状态
+	{deleteUserInfo:createDeleteUserInfoAction} //映射操作状态的方法
+)
 class Admin extends Component {
 
 	logout = ()=>{
@@ -21,7 +25,6 @@ class Admin extends Component {
 	}
 }
 
-export default connect(
-	(state)=>({userInfo:state.userInfo}), //映射状态
-	{deleteUserInfo:createDeleteUserInfoAction} //映射操作状态的方法
-)(Admin)
+export default Admin
+
+

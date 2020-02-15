@@ -18,6 +18,8 @@
 		1.装饰器语法：
 				第一步：安装：@babel/plugin-proposal-decorators
 				第二步：更改：config-overrides.js文件，添加一个addDecoratorsLegacy
+				第三步：更改编译器设置，首选项-->设置---->搜索“decorators”,将中间选项的钩，勾选。
+		
 
 		
 		

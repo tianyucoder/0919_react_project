@@ -24,12 +24,12 @@ export default class App extends Component {
 }
 
 //使用装饰器语法，代码如下:
-@demo
-class MyClass {}
+// @demo
+// class MyClass {}
 
 //上方的装饰器语法，会被翻译为如下代码：
-//class MyClass {}
-//demo(MyClass) */
+// class MyClass {}
+// demo(MyClass) */
 
 
 //情况二：装饰器函数有返回值
@@ -40,12 +40,12 @@ class MyClass {}
 }
 
 //使用装饰器语法，代码如下
-@demo
-class MyClass {}
+// @demo
+// class MyClass {}
 
 //上方的装饰器语法，会被翻译为如下代码:
-// class MyClass {}
-// MyClass = demo(MyClass) */
+class MyClass {}
+MyClass = demo(MyClass) */
 
 
 
@@ -64,7 +64,7 @@ class MyClass {}
 class MyClass {}
 
 //上方的装饰器语法，会被翻译为如下代码:
-//class MyClass {}
-//MyClass = test()(MyClass) */
+class MyClass {}
+MyClass = test()(MyClass) */
 
 
