@@ -15,7 +15,7 @@ import {createDeleteTitleAction} from '../redux/actions/header'
 import {createDeleteUserInfoAction} from '../redux/actions/login'
 //引入NProgress样式
 import 'nprogress/nprogress.css'
-
+//请求基本路径
 axios.defaults.baseURL = BASE_URL
 
 //使用axios的请求拦截器
