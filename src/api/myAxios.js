@@ -8,6 +8,11 @@ import {message} from 'antd'
 import {BASE_URL} from '../config'
 //引入NProgress,用于实现请求进度条效果
 import NProgress from 'nprogress'
+//引入store，目的是获取redux中的token
+import store from '../redux/store'
+//引入action，用于创建action
+import {createDeleteTitleAction} from '../redux/actions/header'
+import {createDeleteUserInfoAction} from '../redux/actions/login'
 //引入NProgress样式
 import 'nprogress/nprogress.css'
 
@@ -15,6 +20,10 @@ axios.defaults.baseURL = BASE_URL
 
 //使用axios的请求拦截器
 axios.interceptors.request.use((config)=>{
+	if(store.getState().userInfo.token){
+		const {token} =  store.getState().userInfo
+		config.headers.Authorization = 'atguigu_'+token
+	}
 	NProgress.start()
 	//config是配置对象，里面包含着所有本次请求的必要信息，比如：请求方式、请求的地址
 	const {method,data} = config
@@ -37,7 +46,13 @@ axios.interceptors.response.use(
 		NProgress.done()
 		//如果响应的状态码不是2开头，或者连接超时，axios认为响应就是失败的
 		//console.log('响应拦截器--失败',err.message);
-		message.error('请求失败，请联系管理员！')
+		if(err.response.status === 401){
+			message.error('身份过期，请重新登录')
+			store.dispatch(createDeleteTitleAction())
+			store.dispatch(createDeleteUserInfoAction())
+		}else{
+			message.error('请求失败，请联系管理员！')
+		}
 		//return Promise.reject(error.message) //这样写，会触发axios发送请求失败的回调
 		return new Promise(()=>{}) //这样写，不会触发axios发送请求失败的回调
 	}
