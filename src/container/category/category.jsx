@@ -1,17 +1,25 @@
 import React, { Component } from 'react'
-import {Card,Button,Icon,Table,Modal,Input,Form} from 'antd';
-import {reqCategory} from '../../api'
+import {connect} from 'react-redux'
+import {createGetCategoryAsyncAction} from '../../redux/actions/category'
+import {Card,Button,Icon,Table,Modal,Input,Form, message} from 'antd';
+import {PAGE_SIZE} from '../../config'
 
 const {Item} = Form
 
+@connect(
+	(state)=>({categoryList:state.categoryList}),//映射状态
+	{getCategory:createGetCategoryAsyncAction}//映射操作状态的方法
+)
 @Form.create()
 class Category extends Component {
 
-	state = { visible: false };
+	state = {
+		visible:false //是否展示弹窗
+	};
 
-	async componentDidMount(){
-		let result = await reqCategory()
-		console.log(result);
+	componentDidMount(){
+		//分发一个获取商品分类信息的action
+		this.props.getCategory()
 	}
 
 	//用于展示弹窗
@@ -21,32 +29,22 @@ class Category extends Component {
 
 	//确定按钮的回调
   handleOk = () => {
-    this.setState({visible: false});
+		this.props.form.validateFields((err,values) => {
+			if(!err){
+				console.log(values);
+			}
+    });
+    this.setState({visible: false}); //隐藏弹窗
   };
 
 	//取消按钮的回调
   handleCancel = () => {
-    this.setState({visible: false});
+    this.setState({visible: false}); //隐藏弹窗
   };
 	
 	render() {
 		const {getFieldDecorator} = this.props.form;
-		//数据
-		const dataSource = [
-			{
-				key: '1',
-				name: '测试分类一',
-			},
-			{
-				key: '2',
-				name: '测试分类二',
-			},
-			{
-				key: '3',
-				name: '测试分类三',
-			},
-		];
-		//列
+		//表格列的设置(重要配置，可以设置列的宽、展示什么信息等)
 		const columns = [
 			{
 				title: '分类名',
@@ -73,12 +71,14 @@ class Category extends Component {
 					}
 				>
 					<Table 
-						dataSource={dataSource} 
-						columns={columns} 
-						bordered
+						dataSource={this.props.categoryList} //表格数据
+						columns={columns} //表格列的信息
+						bordered //表格展示边框
+						pagination={{pageSize:PAGE_SIZE}}
+						rowKey="_id"
 					/>
 				</Card>
-				{/* 弹窗 */}
+				{/* 新增分类、修改分类弹窗（复用弹窗） */}
 				<Modal
           title="添加分类" //
           visible={this.state.visible} //控制弹窗是否显示

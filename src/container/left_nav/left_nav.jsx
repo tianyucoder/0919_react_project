@@ -16,7 +16,7 @@ const {SubMenu,Item} = Menu;
 class left_nav extends Component {
 
 	getTitle = ()=>{
-		console.log('没办法了，redux中没有title了，只能根据路径靠getTitle计算');
+		//console.log('没办法了，redux中没有title了，只能根据路径靠getTitle计算');
 		let title = ''
 		let {pathname} = this.props.location
 		if(pathname === '/admin') pathname = '/admin/home'
@@ -37,7 +37,6 @@ class left_nav extends Component {
 	}
 
 	componentDidMount(){
-		console.log('left-nav-componentDidMount');
 		//如果redux中没有title（可能是：1.初次登录。2.刷新页面）
 		if(!this.props.title){
 			this.getTitle()
