@@ -17,8 +17,9 @@ class left_nav extends Component {
 
 	getTitle = ()=>{
 		console.log('没办法了，redux中没有title了，只能根据路径靠getTitle计算');
-		let title
+		let title = ''
 		let {pathname} = this.props.location
+		if(pathname === '/admin') pathname = '/admin/home'
 		let currentKey = pathname.split('/').reverse()[0]
 		menus.forEach((menuObj)=>{
 			if(menuObj.children instanceof Array){
@@ -36,6 +37,7 @@ class left_nav extends Component {
 	}
 
 	componentDidMount(){
+		console.log('left-nav-componentDidMount');
 		//如果redux中没有title（可能是：1.初次登录。2.刷新页面）
 		if(!this.props.title){
 			this.getTitle()
