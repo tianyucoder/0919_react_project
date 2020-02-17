@@ -20,8 +20,10 @@ axios.defaults.baseURL = BASE_URL
 
 //使用axios的请求拦截器
 axios.interceptors.request.use((config)=>{
+	//如果redux中存有当前登录用户的token
 	if(store.getState().userInfo.token){
 		const {token} =  store.getState().userInfo
+		//在请求头中携带token，让服务器“认识”用户
 		config.headers.Authorization = 'atguigu_'+token
 	}
 	NProgress.start()
@@ -45,15 +47,15 @@ axios.interceptors.response.use(
 	(err)=>{
 		NProgress.done()
 		//如果响应的状态码不是2开头，或者连接超时，axios认为响应就是失败的
-		//console.log('响应拦截器--失败',err.message);
 		if(err.response.status === 401){
+			//如果服务器返回状态码是401，意味着用户的token失效
 			message.error('身份过期，请重新登录')
-			store.dispatch(createDeleteTitleAction())
-			store.dispatch(createDeleteUserInfoAction())
+			store.dispatch(createDeleteTitleAction()) //删除redux中用户信息
+			store.dispatch(createDeleteUserInfoAction()) //删除redux中头部标题
 		}else{
+			//如果不是401，就证明是其他错误
 			message.error('请求失败，请联系管理员！')
 		}
-		//return Promise.reject(error.message) //这样写，会触发axios发送请求失败的回调
 		return new Promise(()=>{}) //这样写，不会触发axios发送请求失败的回调
 	}
 )
