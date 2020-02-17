@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Menu, Icon} from 'antd';
+import {Link,withRouter} from 'react-router-dom'
 import menus from '../../config/menu-config'
 import logo from '../../static/imgs/logo.png'
 import './left_nav.less'
 const {SubMenu,Item} = Menu;
 
-export default class left_nav extends Component {
+@withRouter //非路由组件，想用路由组件的API，要经过withRouter的包装
+class left_nav extends Component {
 
 	//创建菜单
 	createMenu = (menuArr)=>{
@@ -13,8 +15,10 @@ export default class left_nav extends Component {
 			if(!menuObj.children){
 				return (
 					<Item key={menuObj.key}>
-						<Icon type={menuObj.icon} />
-						<span>{menuObj.title}</span>
+						<Link to={menuObj.path}>
+							<Icon type={menuObj.icon}/>
+							<span>{menuObj.title}</span>
+						</Link>
 					</Item>
 				)
 			}else{
@@ -36,6 +40,9 @@ export default class left_nav extends Component {
 	}
 
 	render() {
+		const {pathname} = this.props.location
+		let openKey = pathname.split('/') //数组
+		let selectedKey = pathname.split('/').reverse()[0] //字符串
 		return (
 			<div className="left-nav">
 				<div className="nav-top" name="lis">
@@ -44,8 +51,8 @@ export default class left_nav extends Component {
 				</div>
 				<div>
 					<Menu
-						defaultSelectedKeys={[]} //默认选中哪个菜单
-						defaultOpenKeys={[]} //默认展开哪个菜单(该菜单有子菜单)
+						defaultSelectedKeys={[selectedKey]} //默认选中哪个菜单
+						defaultOpenKeys={openKey} //默认展开哪个菜单(该菜单有子菜单)
 						mode="inline" //菜单范围内展开
 						theme="dark" //主题
 					>
@@ -56,3 +63,5 @@ export default class left_nav extends Component {
 		)
 	}
 }
+
+export default left_nav
