@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import {createGetCategoryAsyncAction} from '../../redux/actions/category'
-import {Card,Button,Icon,Table,Modal,Input,Form, message} from 'antd';
+import {Card,Button,Icon,Table,Modal,Input,Form} from 'antd';
 import {PAGE_SIZE} from '../../config'
 
 const {Item} = Form
