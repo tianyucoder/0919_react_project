@@ -5,12 +5,16 @@ import {connect} from 'react-redux'
 import {reqWeather} from '../../api'
 import dayjs from 'dayjs'
 import {createDeleteUserInfoAction} from '../../redux/actions/login'
+import {createDeleteTitleAction} from '../../redux/actions/header'
 import './header.less'
 const {confirm} = Modal;
 
 @connect(
-	(state)=>({userInfo:state.userInfo}),//映射状态
-	{deleteUserInfo:createDeleteUserInfoAction}//映射操作状态的方法
+	(state)=>({userInfo:state.userInfo,title:state.headerTitle}),//映射状态
+	{
+		deleteUserInfo:createDeleteUserInfoAction,
+		deleteTitle:createDeleteTitleAction
+	}//映射操作状态的方法
 )
 class Header extends Component {
 
@@ -30,6 +34,8 @@ class Header extends Component {
 			onOk:()=> {
 				//操作redux状态，实现退出登录
 				this.props.deleteUserInfo()
+				//清空redux中保存的title
+				this.props.deleteTitle()
 			},
 		});
 	}
@@ -77,7 +83,7 @@ class Header extends Component {
 				</div>
 				<div className="header-bottom">
 					<div className="bottom-left">
-						<span>首页</span>
+						<span>{this.props.title}</span>
 					</div>
 					<div className="bottom-right">
 						<span>{this.state.date}</span>
