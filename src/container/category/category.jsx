@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {createGetCategoryAsyncAction} from '../../redux/actions/category'
 import {Card,Button,Icon,Table,Modal,Input,Form,message} from 'antd';
 import {PAGE_SIZE} from '../../config'
-import {reqAddCategory} from '../../api'
+import {reqAddCategory,reqUpdateCategory} from '../../api'
 const {Item} = Form
 
 @connect(
@@ -22,18 +22,34 @@ class Category extends Component {
 	}
 
 	//用于展示弹窗
-  showModal = () => {
-    this.setState({visible: true}); //展示弹窗
+  showModal = (categoryObj) => {
+		//尝试获取当前商品的name,_id，注意：新增的时候不会获取到name,_id
+		const {name,_id} = categoryObj
+		//如果是修改
+		if(name&&_id) {
+			this.isUpdate = true
+			this.name = name //将分类名字存入在组件实例对象身上
+			this._id = _id //将分类的_id存入在组件实例对象身上
+		}else{
+			this.isUpdate = false
+			this.name = ''
+			this._id = ''
+		}
+     this.setState({visible: true}); //展示弹窗
   };
 
 	//确定按钮的回调
   handleOk = () => {
 		this.props.form.validateFields(async(err,values) => {
 			if(!err){
-				let result = await reqAddCategory(values.categoryName)
-				const {status,data,msg} = result
+				let result 
+				//若为新增
+				if(!this.isUpdate) result = await reqAddCategory(values.categoryName)
+				//若为修改
+				else result = await reqUpdateCategory(this._id,values.categoryName)
+				const {status,msg} = result
 				if(status === 0){
-					message.success('添加商品成功')
+					message.success('操作成功')
 					this.props.getCategory() //重新获取所有分类数据
 					this.props.form.resetFields()//重置表单
 					this.setState({visible: false}); //隐藏弹窗
@@ -62,13 +78,13 @@ class Category extends Component {
 			},
 			{
 				title: '操作',
-				//dataIndex: 'a',
+				//dataIndex: '_id',
 				key: 'age',
 				width:"25%",
 				align:'center',
 				//当前列如果不是单纯的展示数据，而是展示一些按钮、超链接等结构性的东西，要写render属性
 				//render属性的值是一个函数，该函数返回的“东西”展示在该条数据中
-				render:()=> <Button type="link">修改分类</Button> 
+				render:(categoryObj)=> <Button type="link" onClick={()=>{this.showModal(categoryObj)}}>修改分类</Button> 
 			}
 		];
 		return (
@@ -91,7 +107,7 @@ class Category extends Component {
 				</Card>
 				{/* 新增分类、修改分类弹窗（复用弹窗） */}
 				<Modal
-          title="添加分类" //弹窗的标题
+          title={this.isUpdate ? '修改分类':'添加分类'} //弹窗的标题
           visible={this.state.visible} //控制弹窗是否显示
           onOk={this.handleOk}//确定按钮的回调
 					onCancel={this.handleCancel}//取消按钮的回调
@@ -101,7 +117,8 @@ class Category extends Component {
           <Form className="login-form">
 						<Item>
 							{getFieldDecorator('categoryName', {
-									rules: [{required: true, message: '分类名必须输入'}]
+									rules: [{required: true, message: '分类名必须输入'}],
+									initialValue:this.name ? this.name : ''
 								})(<Input placeholder="请输入分类名"/>)
 							}
 						</Item>
