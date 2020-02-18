@@ -1,26 +1,28 @@
 import React, { Component } from 'react'
 import { Card,Button,Icon,Select,Input,Table} from 'antd';
+import {reqProductList} from '../../api'
+import {PAGE_SIZE} from '../../config'
 const { Option } = Select;
 
 export default class Product extends Component {
+
+	state = {
+		productList:[]
+	}
+
+	getProductList = async(pageNumber=1)=>{
+		let result = await reqProductList(pageNumber,PAGE_SIZE)
+		const {status,data,msg} = result
+		if(status===0){
+			this.setState({productList:data.list})
+		}
+	}
+
+	componentDidMount(){
+		this.getProductList()
+	}
+
 	render() {
-		//模拟的表格数据(后期会有真实数据进来)
-		const dataSource = [
-			{
-				_id: '1',
-				status:1, //1代表商品上架状态 2代表商品下架
-				name: '微波炉',
-				desc: '不会爆炸，很好用',
-				price: 499,
-			},
-			{
-				_id: '2',
-				status:2, //1代表商品上架状态 2代表商品下架
-				name: '冰箱',
-				desc: '可以装大象',
-				price: 899,
-			},
-		];
 		//表格的列设置（重要）
 		const columns = [
 			{
@@ -88,9 +90,10 @@ export default class Product extends Component {
 				extra={<Button type="primary"><Icon type="plus-circle"/>添加商品</Button>}
 			>
 				<Table 
-					dataSource={dataSource} //配置表格数据
+					dataSource={this.state.productList} //配置表格数据
 					columns={columns} //配置表格的列（重要）
 					bordered
+					rowKey='_id'
 				/>
 			</Card>
 		)

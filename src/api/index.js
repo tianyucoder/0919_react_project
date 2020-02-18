@@ -23,12 +23,15 @@ export const reqWeather = () => {
 		})
 	})
 }
-//请求分类列表
+//请求分类列表(假分页)
 export const reqCategoryList = () => myAxios.get('/manage/category/list')
 //请求添加商品分类
 export const reqAddCategory = (categoryName) => myAxios.post('/manage/category/add',{categoryName})
 //请求修改商品分类
 export const reqUpdateCategory = (categoryId,categoryName) => myAxios.post('/manage/category/update',{categoryId,categoryName})
+//请求商品数据（分页请求）
+export const reqProductList = (pageNum,pageSize)=> myAxios.get('/manage/product/list',{params:{pageNum,pageSize}})
+
 
 
 
