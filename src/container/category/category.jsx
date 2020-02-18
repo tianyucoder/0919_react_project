@@ -114,7 +114,16 @@ class Category extends Component {
 					okText="确定" //确认按钮的文字
 					cancelText="取消"//取消按钮的文字
         >
-          <Input placeholder="请输入分类名"/>
+          <Form>
+						<Item>
+						{
+							getFieldDecorator('categoryName',{
+									initialValue:this.name || '',
+									rules: [{required: true, message: '分类名必须输入'}],
+								})(<Input placeholder="请输入分类名"/>)
+						}
+						</Item>
+					</Form>
         </Modal>
 			</div>
 		)
