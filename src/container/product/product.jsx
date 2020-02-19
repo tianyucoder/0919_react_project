@@ -13,37 +13,20 @@ export default class Product extends Component {
 		keyWord:''//搜索的关键词
 	}
 
-	search = async()=>{
-		//1.获取用户的输入（已经在状态里了）
-		const {searchType,keyWord} = this.state
-		console.log(searchType,keyWord);
-		//2.发送请求获取搜索结果
-		let result = await reqSearchProductList(searchType,keyWord,1,PAGE_SIZE)
-		console.log(result);
-		const {status,data,msg} = result 
-		if(status === 0 ){
-			const {list,total} =data
-			this.setState({
-				productList:list,
-				total
-			})
-		}else{
-			message.error(msg)
-		}
-	}
-
+	//对商品进行上架、下架
 	changeStatus = async(productObj)=>{
 		//1.如果原来状态为1，那么改为2，反之亦然
-		let {_id} = productObj
-		let _status = productObj.status
-		if(_status === 1) _status = 2
+		let {_id} = productObj //获取当前商品的_id
+		let _status = productObj.status //获取当前商品的状态
+		if(_status === 1) _status = 2 //更改状态（取反）
 		else _status = 1
 		//2.发送请求更新商品
 		let result = await reqUpdateProductStatus(_id,_status)
-
-		const {status,msg} = result
+		const {status,msg} = result //解析回来的数据
 		if(status === 0){
+			//如果成功
 			message.success('操作成功')
+			//刷新商品列表
 			this.getProductList()
 		}else{
 			message.error(msg)
@@ -53,28 +36,26 @@ export default class Product extends Component {
 
 	//初始化商品列表、搜索商品列表
 	getProductList = async(pageNumber=1)=>{
-		let result 
-		console.log(pageNumber);
+		let result //提前定义好一个变量接收服务器返回的数据
 		if(this.isSearch){
+			//如果是搜索查询
 			const {searchType,keyWord} = this.state
 			result = await reqSearchProductList(searchType,keyWord,pageNumber,PAGE_SIZE)
 		}else{
+			//如果是初始化查询
 			result = await reqProductList(pageNumber,PAGE_SIZE)
 		}
 		const {status,data,msg} = result
-		//console.log(data);
-		if(status===0){
-			const {list,total} =data
-			this.setState({
-				productList:list,
-				total
-			})
+		if(status===0){ //若获取数据成功
+			const {list,total} = data
+			this.setState({productList:list,total}) //更新状态
 		}else{
 			message.error(msg)
 		}
 	}
 
 	componentDidMount(){
+		//一上来就请求第一页商品信息
 		this.getProductList()
 	}
 

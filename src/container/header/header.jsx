@@ -63,7 +63,7 @@ class Header extends Component {
 			this.setState({date:dayjs().format('YYYY年 MM月 DD日 HH:mm:ss')})
 		},1000)
 		//调用getWeatherData，获取天气信息
-		//this.getWeatherData()
+		this.getWeatherData()
 	}
 
 	componentWillUnmount(){

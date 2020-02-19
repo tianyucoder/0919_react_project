@@ -101,7 +101,10 @@ class Category extends Component {
 						dataSource={this.props.categoryList} //表格数据
 						columns={columns} //表格列的信息(重要)
 						bordered //表格展示边框
-						pagination={{pageSize:PAGE_SIZE}}//分页器，用于配置：每页展示多少条等信息
+						pagination={{
+							pageSize:PAGE_SIZE,
+							showQuickJumper:true
+						}}//分页器，用于配置：每页展示多少条等信息
 						rowKey="_id"//每条数据都应该有一个唯一标识，antd默认找的标识是key，如果不想用key，那么在此指定
 					/>
 				</Card>
@@ -114,16 +117,7 @@ class Category extends Component {
 					okText="确定" //确认按钮的文字
 					cancelText="取消"//取消按钮的文字
         >
-          <Form>
-						<Item>
-						{
-							getFieldDecorator('categoryName',{
-									initialValue:this.name || '',
-									rules: [{required: true, message: '分类名必须输入'}],
-								})(<Input placeholder="请输入分类名"/>)
-						}
-						</Item>
-					</Form>
+          <Input placeholder="请输入分类名"/>
         </Modal>
 			</div>
 		)
