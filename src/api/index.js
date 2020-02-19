@@ -38,9 +38,10 @@ export const reqUpdateProductStatus = (productId,status) => myAxios.post('/manag
 //请求删除图片
 export const reqDeletePicture = (name) => myAxios.post('/manage/img/delete',{name})
 //请求添加商品
-export const reqAddProduct = (proObj) => myAxios.post('/manage/product/add',proObj)
-
-
-
+export const reqAddProduct = (prodObj) => myAxios.post('/manage/product/add',prodObj)
+//根据商品id获取商品详细信息
+export const reqProductById = (productId) => myAxios.get('/manage/product/info',{params:{productId}})
+//请求更新商品
+export const reqUpdateProduct = (prodObj) => myAxios.post('/manage/product/update',prodObj)
 
 

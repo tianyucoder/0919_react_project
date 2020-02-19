@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {EditorState,convertToRaw} from 'draft-js';
+import {EditorState,convertToRaw,ContentState} from 'draft-js';
 import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
-//import htmlToDraft from 'html-to-draftjs';
+import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 
 export default class RichTextEditor extends Component {
@@ -23,6 +23,16 @@ export default class RichTextEditor extends Component {
 		return draftToHtml(convertToRaw(editorState.getCurrentContent()))
 	}
 
+	//将服务器返回的html变成富文本编辑器
+	setRichText = (html)=>{
+    const contentBlock = htmlToDraft(html);
+    if (contentBlock) {
+      const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+      const editorState = EditorState.createWithContent(contentState);
+      this.setState({editorState})
+    }
+	}
+
   render() {
     const {editorState} = this.state;
     return (
@@ -35,7 +45,7 @@ export default class RichTextEditor extends Component {
 						border:'1px solid black',
 						minHeight:'200px',
 						padding:'0px 10px',
-						lineHeight:'10px'
+						lineHeight:'15px'
 					}}
           onEditorStateChange={this.onEditorStateChange}
         />

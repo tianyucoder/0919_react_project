@@ -31,6 +31,19 @@ export default class PicturesWall extends Component {
 		return result
 	}
 
+	//回显图片
+	setImgNames = (nameArr)=>{
+		let result = []
+		nameArr.forEach((name,index)=>{
+			result.push({
+				uid:-index,
+				name,
+				url:BASE_URL+'/upload/'+name
+			})
+		})
+		this.setState({fileList:result})
+	}
+
 	//图片预览框关闭按钮的回调
   handleCancel = () => this.setState({previewVisible: false});
 
