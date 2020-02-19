@@ -48,32 +48,37 @@ class AddUpdate extends Component {
 	componentDidMount(){
 		//若redux中没有categoryList，分发一个获取列表的action
 		if(!this.props.categoryList.length) this.props.getCategoryList()
-		//看有没有id，若有，是修改；若没有，是新增
+		//看有没有id，若有id是修改,若没有id是新增
 		const {id} = this.props.match.params
 		if(id) this.getProductById(id)
 	}
 
 	//响应表单提交的
 	handleSubmit = (event)=>{
-    event.preventDefault()
+    event.preventDefault()//阻止默认事件
     this.props.form.validateFields(async(err, values) => {
       if(!err){
+				//获取富文本编辑器内容
 				const detail = this.refs.RichTextEditor.getRichText()
+				//获取上传组件图片名称数组
 				const imgs = this.refs.PictureWall.getImgNames()
+				//向values对象中添加：商品详情、图片数组
 				values.detail = detail
 				values.imgs = imgs
+				//获取当前操作商品的id
 				const {_id} = this.state.currentProd
-				let result 
+				let result //result为服务器返回的数据
 				if(_id){
 					values._id = _id
 					result = await reqUpdateProduct(values)
 				}else{
 					result = await reqAddProduct(values)
 				}
+				//获取操作状态、错误信息
 				const {status,msg} = result
 				if(status === 0){
 					message.success('操作商品成功')
-					this.props.history.replace('/admin/prod_about/product')
+					this.props.history.replace('/admin/prod_about/product') //跳转页面
 				}else{
 					message.error(msg)
 				}
@@ -83,6 +88,7 @@ class AddUpdate extends Component {
 
 	render() {
 		const {getFieldDecorator} = this.props.form;
+		//从状态中获取当前商品的详细信息
 		const {categoryId,name,desc,price} = this.state.currentProd
     return (
         <Card 

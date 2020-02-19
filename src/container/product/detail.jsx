@@ -24,6 +24,7 @@ class Detail extends Component {
 		}
 	}
 
+	//根据分类id获取分类名称
 	getCategoryName = (id)=>{
 		let result = this.props.categoryList.find((categoryObj)=>{
 			return id === categoryObj._id
@@ -31,7 +32,9 @@ class Detail extends Component {
 		if(result) return result.name
 	}
 
+	//通过id获取商品详细信息
 	getProductById = async(id)=>{
+		//发起请求获取商品id
 		let result = await reqProductById(id)
 		const {status,data,msg} = result
 		if(status === 0){
