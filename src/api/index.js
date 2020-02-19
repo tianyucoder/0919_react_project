@@ -43,5 +43,14 @@ export const reqAddProduct = (prodObj) => myAxios.post('/manage/product/add',pro
 export const reqProductById = (productId) => myAxios.get('/manage/product/info',{params:{productId}})
 //请求更新商品
 export const reqUpdateProduct = (prodObj) => myAxios.post('/manage/product/update',prodObj)
-
+//请求角色列表
+export const reqRoleList = () => myAxios.get('/manage/role/list')
+//请求添加角色
+export const reqAddRole = (roleName) => myAxios.post('/manage/role/add',{roleName})
+//请求授权角色
+export const reqAuthRole = (_id,auth_name,menus) => myAxios.post('/manage/role/update',{_id,auth_name,menus,auth_time:Date.now()})
+//请求所有用户列表
+export const reqUserList = () => myAxios.get('/manage/user/list')
+//请求添加用户
+export const reqAddUser = (userObj) => myAxios.post('/manage/user/add',userObj)
 
