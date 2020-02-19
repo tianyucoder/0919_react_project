@@ -35,6 +35,10 @@ export const reqProductList = (pageNum,pageSize)=> myAxios.get('/manage/product/
 export const reqSearchProductList = (searchType,keyWord,pageNum,pageSize) => myAxios.get('/manage/product/search',{params:{[searchType]:keyWord,pageNum,pageSize}})
 //请求操作商品状态
 export const reqUpdateProductStatus = (productId,status) => myAxios.post('/manage/product/updateStatus',{productId,status})
+//请求删除图片
+export const reqDeletePicture = (name) => myAxios.post('/manage/img/delete',{name})
+//请求添加商品
+export const reqAddProduct = (proObj) => myAxios.post('/manage/product/add',proObj)
 
 
 
