@@ -25,7 +25,6 @@ class Category extends Component {
   showModal = (categoryObj) => {
 		//尝试获取当前商品的name,_id，注意：新增的时候不会获取到name,_id
 		const {name,_id} = categoryObj
-		console.log(name,_id);
 		//如果是修改
 		if(name&&_id) {
 			this.isUpdate = true
