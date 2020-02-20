@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<script type="text/javascript" >
+
+		let arr = [
+			{name:'xiaole',age:18},
+			{name:'yy',age:19},
+			{name:'chengcheng',age:20},
+			{name:'chao',age:21},
+		];
+
+
+		//demo函数是用于检查传入的数据是否为偶数
+		function demo (peronObj) {
+			return peronObj.name.indexOf('z') !== -1
+		}
+
+		//想检测arr数组中，是不是至少有一个数据是偶数
+		//arr数组中是否至少有一个数据通过了demo的检测
+		console.log(arr.some(demo));
+
+	</script>
+</body>
+</html>

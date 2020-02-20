@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>useState</title>
+</head>
+<body>
+
+<div id="example1"></div>
+<hr/>
+<div id="example2"></div>
+
+<script src="../js/react.development.js"></script>
+<script src="../js/react-dom.development.js"></script>
+<script src="../js/babel.min.js"></script>
+
+<script type="text/babel">
+
+  /* class Count extends React.Component {
+    state = {count: 0}
+
+		add = ()=>{
+			this.setState({count:this.state.count + 1})
+		}
+
+    render () {
+      return (
+        <div>
+          <h2>你点击了 {this.state.count} times</h2>
+          <button onClick={this.add}>
+            点我
+          </button>
+        </div>
+      )
+    }
+  } */
+
+	function Count (){
+
+		const [count,setCount] = React.useState(0)
+
+		function add (){
+			setCount(count+1)
+		}
+
+		return (
+        <div>
+          <h2>你点击了 {count} times</h2>
+          <button onClick={add}>
+            点我
+          </button>
+        </div>
+      )
+	}
+
+
+	ReactDOM.render(<Count/>, document.getElementById('example1'))
+ 
+</script>
+</body>
+</html>
+

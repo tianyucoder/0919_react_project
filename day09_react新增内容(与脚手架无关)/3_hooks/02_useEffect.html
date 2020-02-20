@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>useEffect</title>
+</head>
+<body>
+
+<div id="demo"></div>
+
+<script type="text/javascript" src="../js/react.development.js"></script>
+<script type="text/javascript" src="../js/react-dom.development.js"></script>
+<script type="text/javascript" src="../js/babel.min.js"></script>
+
+
+<script type="text/babel">
+
+/* class Count extends React.Component {
+
+    state = {count: 0}
+
+		add = ()=>{
+			this.setState({count:this.state.count + 1})
+		}
+
+		death = ()=>{
+			ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+		}
+
+		componentDidMount(){
+			this.id = setInterval(() => {
+				this.setState({count:this.state.count+1})
+			}, 1000);
+		}
+
+		componentWillUnmount(){
+			clearInterval(this.id)
+		}
+
+    render () {
+      return (
+        <div>
+          <p>你点击了 {this.state.count} times</p>
+          <button onClick={this.add}>点我</button>
+          <button onClick={this.death}>卸载组件</button>
+        </div>
+      )
+    }
+  }  */
+
+
+	function Count (){
+		const [count,setCount] = React.useState(0)
+
+		function add (){
+			setCount(count+1)
+		}
+
+		function death (){
+			ReactDOM.unmountComponentAtNode(document.getElementById('demo'))
+		}
+
+		React.useEffect(()=>{
+			let id = setInterval(() => {
+				setCount((count)=> count+1)
+			}, 1000);
+			console.log(1);
+			return ()=>{
+				clearInterval(id)
+			}
+		},[])
+
+		return (
+				<div>
+					<h2>你点击了 {count} times</h2>
+					<button onClick={add}>点我</button>
+					<button onClick={death}>卸载组件</button>
+				</div>
+			)
+		}
+
+	ReactDOM.render(<Count/>, document.getElementById('demo'))
+
+</script>
+</body>
+</html>
+
