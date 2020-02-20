@@ -25,6 +25,7 @@ class Category extends Component {
   showModal = (categoryObj) => {
 		//尝试获取当前商品的name,_id，注意：新增的时候不会获取到name,_id
 		const {name,_id} = categoryObj
+		console.log(name,_id);
 		//如果是修改
 		if(name&&_id) {
 			this.isUpdate = true
@@ -117,7 +118,15 @@ class Category extends Component {
 					okText="确定" //确认按钮的文字
 					cancelText="取消"//取消按钮的文字
         >
-          <Input placeholder="请输入分类名"/>
+          <Form className="login-form">
+						<Item>
+							{getFieldDecorator('categoryName', {
+									rules: [{required: true, message: '分类名必须输入'}],
+									initialValue:this.name,
+								})(<Input placeholder="请输入分类名"/>)
+							}
+						</Item>
+					</Form>
         </Modal>
 			</div>
 		)

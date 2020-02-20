@@ -77,7 +77,6 @@ class Role extends Component {
 	
 	//授权----确认按钮的回调
   handleAuthOk = async() => {
-		const _id = this._id
 		const {checkedKeys} = this.state
 		const {name} = this.props
 		let result = await reqAuthRole(this._id,name,checkedKeys)

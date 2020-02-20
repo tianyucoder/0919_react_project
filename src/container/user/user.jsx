@@ -17,7 +17,7 @@ class User extends Component {
 
 	getRoleList = async()=>{
 		let result = await reqUserList()
-		const {status,data,msg} = result
+		const {status,data} = result
 		if(status === 0){
 			this.setState({users:data.users,roles:data.roles})
 		}
